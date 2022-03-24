@@ -27,13 +27,13 @@ func main() {
 
 	routes.PingRouter(app)
 
-	client := cmsclient.New()
+	client := cmsclient.New(logger)
 	routes.SchedulesRouter(app, client)
 
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, os.Interrupt)
 
-	// allows for more graceful shutdown
+	// allows for a more graceful shutdown
 	serverShutdown := make(chan struct{})
 	go func() {
 		_ = <-c

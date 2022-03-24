@@ -6,8 +6,10 @@ import (
 )
 
 func GetSchedule(client cmsclient.Client) fiber.Handler {
+	// TODO: async publish domain event(s) to messaging (e.g. Kafka)
 	return func(ctx *fiber.Ctx) error {
 		scheduleID := ctx.Params("id")
+
 		result, _ := client.GetSchedule(scheduleID)
 		return ctx.JSON(result)
 	}
