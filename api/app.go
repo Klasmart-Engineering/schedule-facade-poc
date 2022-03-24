@@ -6,6 +6,7 @@ import (
 	"github.com/kl-engineering/schedule/api/middleware/requestlogger"
 	"github.com/kl-engineering/schedule/api/routes"
 	"github.com/kl-engineering/schedule/pkg/backend/cmsclient"
+	"github.com/kl-engineering/schedule/pkg/event/eventpublisher"
 	moretime "github.com/kl-engineering/schedule/pkg/util/time"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
@@ -27,8 +28,9 @@ func main() {
 
 	routes.PingRouter(app)
 
+	ev := eventpublisher.New(logger)
 	client := cmsclient.New(logger)
-	routes.SchedulesRouter(app, client)
+	routes.SchedulesRouter(app, client, ev)
 
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, os.Interrupt)
