@@ -4,6 +4,7 @@
 !.gitignore
 !.github
 !.editorconfig
+!.dockerignore
 
 # Binaries for programs and plugins
 *.exe
